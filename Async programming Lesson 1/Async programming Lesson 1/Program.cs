@@ -31,10 +31,8 @@ namespace Async_programming_Lesson_1
             if (response.IsSuccessStatusCode)
             {
                 await using var responseStream = await response.Content.ReadAsStreamAsync();
-                var options = new JsonSerializerOptions(JsonSerializerDefaults.Web)
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                };
+                var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+                
                 if (await JsonSerializer.DeserializeAsync<Model>(responseStream, options) is Model model)
                     return model;
                 else
