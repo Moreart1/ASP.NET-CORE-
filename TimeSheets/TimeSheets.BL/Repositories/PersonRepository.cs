@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeSheets.DAL;
 using TimeSheets.DAL.Models;
+using TimeSheets.DAL.Validation.PersonValidation;
 
 namespace TimeSheets.BL.Repositories
 {
@@ -19,10 +20,11 @@ namespace TimeSheets.BL.Repositories
             await myDbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int PersonId)
+        public async Task Delete(PersonDeleteModels PersonId)
         {
-            var person = await myDbContext.Persons.FirstOrDefaultAsync(en => en.Id == PersonId);
-                person.IsDelete = true;
+            var person = await myDbContext.Persons.Where(en => en.Id == PersonId.Id)
+                .SingleOrDefaultAsync();
+            myDbContext.Persons.Remove(person);
             await myDbContext.SaveChangesAsync();
         }
 

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeSheets.BL.Repositories;
 using TimeSheets.DAL.Models;
+using TimeSheets.DAL.Validation.EmployeeValidation;
+using TimeSheets.DAL.Validation.Services;
 
 namespace TimeSheets.Controllers
 {
@@ -12,10 +14,16 @@ namespace TimeSheets.Controllers
     public class EmployeeControllers : ControllerBase
     {
         public readonly EmployeeRepository employeeRepository;
+        private ICreateEmployeeValidator createEmployeeValidator;
+        private IDeleteEmployeeValidator deleteEmployeeValidator;
 
-        public EmployeeControllers(EmployeeRepository employeeRepository)
+        public EmployeeControllers(EmployeeRepository employeeRepository,
+            ICreateEmployeeValidator createEmployeeValidator,
+            IDeleteEmployeeValidator deleteEmployeeValidator)
         {
             this.employeeRepository = employeeRepository;
+            this.createEmployeeValidator = createEmployeeValidator;
+            this.deleteEmployeeValidator = deleteEmployeeValidator;
         }
 
         [HttpGet]
@@ -28,6 +36,21 @@ namespace TimeSheets.Controllers
         [HttpPost]
         public async Task<ActionResult<Employee>> Create([FromBody] Employee newEmployee)
         {
+            var request = new Employee
+            {
+                FirstName = newEmployee.FirstName,
+                LastName = newEmployee.LastName,
+                Email = newEmployee.Email,
+                Age = newEmployee.Age,
+                Id = newEmployee.Id,
+                Company = newEmployee.Company,
+                IsDelete = newEmployee.IsDelete
+            };
+            var validation = new OperationResult<Employee>(createEmployeeValidator.ValidateEntity(request));
+            if (!validation.Succeed)
+            {
+                return BadRequest(validation);
+            }
             await employeeRepository.Add(newEmployee);
             return NoContent();
         }
@@ -42,7 +65,13 @@ namespace TimeSheets.Controllers
         [HttpDelete]
         public async Task<ActionResult<Employee>> Delete(int Id)
         {
-            await employeeRepository.Delete(Id);
+            var request = new EmployeeDeleteModel { Id = Id };
+            var validation = new OperationResult<EmployeeDeleteModel>(deleteEmployeeValidator.ValidateEntity(request));
+            if (!validation.Succeed)
+            {
+                return BadRequest(validation);
+            }           
+            await employeeRepository.Delete(request);
             return NoContent();
         }
     }
