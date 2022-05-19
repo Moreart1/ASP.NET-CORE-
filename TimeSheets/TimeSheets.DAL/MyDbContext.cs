@@ -13,12 +13,14 @@ namespace TimeSheets.DAL
         public DbSet<Person> Persons { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<BankAccount> BankAccount { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Person>();
             modelBuilder.Entity<User>();
             modelBuilder.Entity<Employee>();
+            modelBuilder.Entity<BankAccount>();
         }
     }
 }
