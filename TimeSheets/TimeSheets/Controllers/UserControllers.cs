@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeSheets.BL.Repositories;
 using TimeSheets.DAL.Models;
+using TimeSheets.DAL.Validation.Services;
+using TimeSheets.DAL.Validation.UserValidation;
 
 namespace TimeSheets.Controllers
 {
@@ -12,9 +14,16 @@ namespace TimeSheets.Controllers
     public class UserControllers : ControllerBase
     {
         public readonly UserRepository userRepository;
-        public UserControllers(UserRepository userRepository)
+        private ICreateUserValidator createUserValidator;
+        private IDeleteUserValidator deleteUserValidator;
+
+        public UserControllers(UserRepository userRepository,
+            ICreateUserValidator createUserValidator,
+            IDeleteUserValidator deleteUserValidator)
         {
             this.userRepository = userRepository;
+            this.createUserValidator = createUserValidator;
+            this.deleteUserValidator = deleteUserValidator;
         }
 
         [HttpGet]
@@ -27,6 +36,21 @@ namespace TimeSheets.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Create([FromBody] User newUser)
         {
+            var request = new User
+            {
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                Email = newUser.Email,
+                Age = newUser.Age,
+                Id = newUser.Id,
+                Company = newUser.Company,
+                IsDelete = newUser.IsDelete
+            };
+            var validation = new OperationResult<User>(createUserValidator.ValidateEntity(request));
+            if (!validation.Succeed)
+            {
+                return BadRequest(validation);
+            }
             await userRepository.Add(newUser);
             return NoContent();
         }
@@ -41,7 +65,13 @@ namespace TimeSheets.Controllers
         [HttpDelete]
         public async Task<ActionResult<User>> Delete(int Id)
         {
-            await userRepository.Delete(Id);
+            var request = new UserDeleteModel { Id = Id };
+            var validation = new OperationResult<UserDeleteModel>(deleteUserValidator.ValidateEntity(request));
+            if (!validation.Succeed)
+            {
+                return BadRequest(validation);
+            }
+            await userRepository.Delete(request);
             return NoContent();
         }
     }

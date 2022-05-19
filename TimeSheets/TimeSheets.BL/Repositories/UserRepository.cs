@@ -20,10 +20,11 @@ namespace TimeSheets.BL.Repositories
             await myDbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int Id)
+        public async Task Delete(UserDeleteModel UserId)
         {
-            var User = myDbContext.Users.FirstOrDefault(x => x.Id == Id);
-            User.IsDelete = true;
+            var user = await myDbContext.Users.Where(en => en.Id == UserId.Id)
+               .SingleOrDefaultAsync();
+            myDbContext.Persons.Remove(user);
             await myDbContext.SaveChangesAsync();
         }
 

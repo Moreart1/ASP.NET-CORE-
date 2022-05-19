@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using TimeSheets;
 using TimeSheets.BL.Repositories;
 using TimeSheets.DAL;
+using TimeSheets.DAL.Validation;
+using TimeSheets.DAL.Validation.EmployeeValidation;
+using TimeSheets.DAL.Validation.PersonValidation;
+using TimeSheets.DAL.Validation.UserValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +30,12 @@ builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlite(connecti
 builder.Services.AddScoped<PersonRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
+builder.Services.AddScoped<ICreatePersonValidator, CreatePersonValidatior>();
+builder.Services.AddScoped<IDeletePersonValidator,DeletePersonValidator>();
+builder.Services.AddScoped<ICreateUserValidator, CreateUserValidatior>();
+builder.Services.AddScoped<IDeleteUserValidator, DeleteUserValidator>();
+builder.Services.AddScoped<ICreateEmployeeValidator,CreateEmployeeValidatior>();
+builder.Services.AddScoped<IDeleteEmployeeValidator, DeleteEmployeeValidator>();
 
 var app = builder.Build();
 

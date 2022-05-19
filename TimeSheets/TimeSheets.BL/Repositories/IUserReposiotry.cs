@@ -10,6 +10,6 @@ namespace TimeSheets.BL.Repositories
         Task Add(T entity);
         Task<IReadOnlyCollection<T>> Get();
         Task Update(T entity);
-        Task Delete(int Id);
+        Task Delete(UserDeleteModel UserId);
     }
 }
