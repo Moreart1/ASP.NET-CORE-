@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeSheets.BL.Repositories;
 using TimeSheets.DAL.Models;
 
 namespace TimeSheets.Controllers
 {
+    [Authorize]
     [Route("person/[controller]")]
     [ApiController]
     public class PersonControllers : ControllerBase

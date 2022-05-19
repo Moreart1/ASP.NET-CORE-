@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using TimeSheets;
 using TimeSheets.BL.Repositories;
 using TimeSheets.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,6 +28,8 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
 
 var app = builder.Build();
+
+startup.Configure(app, app.Environment);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
