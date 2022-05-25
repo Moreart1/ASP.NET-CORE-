@@ -15,9 +15,17 @@ namespace TimeSheets.Controllers
     [ApiController]
     public class PersonControllers : ControllerBase
     {
+        private readonly IPersonRepository _personRepository;
         public readonly PersonRepository personRepository;
         private ICreatePersonValidator personValidator;
         private IDeletePersonValidator deleteValidator;
+
+        public PersonControllers(IPersonRepository pr, ICreatePersonValidator personValidator, IDeletePersonValidator deleteValidator)
+        {
+            this._personRepository = pr;
+            this.personValidator = personValidator;
+            this.deleteValidator = deleteValidator;
+        }
 
         public PersonControllers(PersonRepository personRepository,ICreatePersonValidator personValidator,IDeletePersonValidator deleteValidator)
         {
