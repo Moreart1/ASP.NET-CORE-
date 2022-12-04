@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheets", "TimeSheets\TimeSheets.csproj", "{564A318A-605A-4421-A037-C2E29CA07376}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSheets", "TimeSheets\TimeSheets.csproj", "{564A318A-605A-4421-A037-C2E29CA07376}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheets.DAL", "TimeSheets.DAL\TimeSheets.DAL.csproj", "{4EEF90F3-207C-475F-9779-4C78F57EB00D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSheets.DAL", "TimeSheets.DAL\TimeSheets.DAL.csproj", "{4EEF90F3-207C-475F-9779-4C78F57EB00D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheets.BL", "TimeSheets.BL\TimeSheets.BL.csproj", "{765FCE8A-2E50-4F16-9953-5FA6A7FEE671}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeSheets.BL", "TimeSheets.BL\TimeSheets.BL.csproj", "{765FCE8A-2E50-4F16-9953-5FA6A7FEE671}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSheets.Test", "TimeSheets.Test\TimeSheets.Test.csproj", "{4277DDFD-3D28-45BD-81FA-CB9C1DBCA7EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{765FCE8A-2E50-4F16-9953-5FA6A7FEE671}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{765FCE8A-2E50-4F16-9953-5FA6A7FEE671}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{765FCE8A-2E50-4F16-9953-5FA6A7FEE671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4277DDFD-3D28-45BD-81FA-CB9C1DBCA7EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4277DDFD-3D28-45BD-81FA-CB9C1DBCA7EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4277DDFD-3D28-45BD-81FA-CB9C1DBCA7EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4277DDFD-3D28-45BD-81FA-CB9C1DBCA7EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
